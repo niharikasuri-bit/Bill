@@ -189,7 +189,8 @@ tbody tr.flash { animation: flash 1.6s ease-out; }
 .summary { text-align: left; background: #f7f7f7; border-radius: 4px; padding: 4px 12px; margin: 12px 0; }
 .summary div { display: flex; justify-content: space-between; gap: 12px; padding: 8px 0; }
 .summary div + div { border-top: 1px solid var(--border); }
-.summary span { color: var(--muted); }
+.summary span { color: var(--muted); text-align: left; }
+.summary small { font-size: 12px; }
 .dialog textarea { width: 100%; min-height: 80px; border: 1px solid #505a5f; border-radius: 2px; padding: 8px 10px; font: inherit; resize: vertical; }
 .dialog label { display: block; text-align: left; font-weight: 500; margin: 12px 0 6px; }
 .dialog .note { text-align: left; color: var(--muted); font-size: 12px; }
@@ -248,3 +249,8 @@ tbody td .link { white-space: nowrap; }
   thead th { position: sticky; top: 0; z-index: 2; }
   .pager { border-top: 1px solid var(--border); }
 }
+
+/* Bill rule note (Approved tab) */
+.bill-rule { display: flex; gap: 10px; align-items: flex-start; margin: 12px 16px 0; padding: 10px 12px; background: #eef5f8; border-left: 4px solid var(--navy); border-radius: 2px; font-size: 13px; line-height: 1.45; }
+.bill-rule .i { color: var(--navy); margin-top: 1px; }
+.bill-rule strong { color: var(--text); }

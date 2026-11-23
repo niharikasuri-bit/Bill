@@ -330,8 +330,9 @@
     const n = sel.size;
     const word = state.tab === "approved" ? "approved register" : "pending register";
     $("#bulkInfo").innerHTML = n
-      ? `<strong>${plural(n, "register")} selected</strong><button type="button" id="clearSel">Clear selection</button>`
+      ? `<strong>${plural(n, "register")} selected</strong>${state.tab === "approved" ? `<span>${plural(new Set(tabRows("approved").filter((r) => sel.has(r.id)).map((r) => r.boundary)).size, "bill")} will be generated</span>` : ""}<button type="button" id="clearSel">Clear selection</button>`
       : `<span>${plural(rows.length, word)}${rows.length ? ` · select registers to ${state.tab === "pending" ? "approve, " : "generate a bill, "}download or delete` : ""}</span>`;
+    $("#billRule").hidden = state.tab !== "approved";
     $("#approveBtn").hidden = state.tab !== "pending";
     $("#approveBtn").disabled = n === 0;
     $("#approveBtn").lastChild.textContent = n > 1 ? `Approve (${n})` : "Approve";
@@ -558,45 +559,48 @@
   }
 
   // ---------- Generate bill ----------
+  // One bill per boundary code: the same boundary across periods = 1 bill; different boundaries = separate bills.
   $("#generateBtn").addEventListener("click", () => {
     const toBill = tabRows("approved").filter((r) => state.selected.approved.has(r.id));
     if (!toBill.length) return;
-    const periods = [...new Set(toBill.map((r) => r.periodId))].map(periodById);
-    const att = toBill.reduce((s, r) => s + r.attendees, 0);
+    const groups = [...new Set(toBill.map((r) => r.boundary))].map((boundary) => {
+      const regs = toBill.filter((r) => r.boundary === boundary);
+      const periods = [...new Set(regs.map((r) => r.periodId))].map(periodById).sort((x, y) => x.n - y.n);
+      return { boundary, regs, periods, att: regs.reduce((s, r) => s + r.attendees, 0) };
+    });
+    const n = groups.length;
+    const periodsText = (g) => g.periods.map(periodShort).join(", ");
     dialog({
-      title: periods.length > 1 ? `Generate ${periods.length} bills?` : "Generate bill?",
+      title: n > 1 ? `Generate ${n} bills?` : "Generate bill?",
       body: `<div class="summary">
-          <div><span>Billing ${periods.length > 1 ? "periods" : "period"}</span><strong style="text-align:right">${periods.map(periodLabel).join("<br>")}</strong></div>
-          <div><span>Approved registers</span><strong>${toBill.length}</strong></div>
-          <div><span>Attendees</span><strong>${att}</strong></div>
+          ${groups.map((g) => `<div><span>${esc(g.boundary)}<br><small>${plural(g.regs.length, "register")} · ${periodsText(g)}</small></span><strong>${plural(g.att, "attendee")}</strong></div>`).join("")}
         </div>
-        ${periods.length > 1 ? `<p class="note">One bill is generated for each billing period. You can find them in My Bills.</p>` : `<p class="note">You can find the bill in My Bills.</p>`}`,
+        <p class="note">${n > 1 ? `One bill is generated for each boundary, so you'll get ${n} bills.` : "One bill is generated for this boundary."} Registers from different billing periods for the same boundary go into the same bill.</p>`,
       actions: [
         { label: "Cancel" },
         {
-          label: periods.length > 1 ? `Generate ${periods.length} bills` : "Generate Bill",
+          label: n > 1 ? `Generate ${n} bills` : "Generate Bill",
           kind: "primary",
-          run: () => withLoader(periods.length > 1 ? "Generating bills…" : "Generating bill…", () => {
-            const nums = periods.map((p) => {
-              const no = `BILL/2026-27/${String(p.n).padStart(2, "0")}/${String(Math.floor(1000 + Math.random() * 9000))}`;
-              const regs = toBill.filter((r) => r.periodId === p.id);
-              regs.forEach((r) => { r.billNo = no; r.logs.push({ action: `Bill generated (${no})`, by: ME, at: new Date() }); });
-              state.bills.push({ no, periodId: p.id, registerIds: regs.map((r) => r.id) });
-              return [p, no, regs.length];
+          run: () => withLoader(n > 1 ? "Generating bills…" : "Generating bill…", () => {
+            const nums = groups.map((g) => {
+              const no = `BILL/2026-27/${String(Math.floor(100000 + Math.random() * 900000))}`;
+              g.regs.forEach((r) => { r.billNo = no; r.logs.push({ action: `Bill generated (${no})`, by: ME, at: new Date() }); });
+              state.bills.push({ no, boundary: g.boundary, registerIds: g.regs.map((r) => r.id) });
+              return { ...g, no };
             });
             state.selected.approved.clear();
             // Drop fully billed periods from the filter; fall back to the next period that still has registers.
             const avail = availablePeriods().map((p) => p.id);
             const keep = state.appliedPeriods.filter((id) => avail.includes(id));
             state.draftPeriods = state.appliedPeriods = keep.length ? keep : avail.slice(0, 1);
-            if (!state.appliedPeriods.length) state.appliedPeriods = [periods[0].id]; // everything billed: show the empty state
+            if (!state.appliedPeriods.length) state.appliedPeriods = [toBill[0].periodId]; // everything billed: show the empty state
             render();
             dialog({
               tone: "success",
               icon: ICON.check,
-              title: nums.length > 1 ? `${nums.length} bills generated` : "Bill generated",
-              body: `<div class="summary">${nums.map(([p, no, n]) => `<div><span>${periodShort(p)} · ${plural(n, "register")}</span><strong>${no}</strong></div>`).join("")}</div>
-                <p class="note">Billed registers are removed from the inbox. You can find the ${nums.length > 1 ? "bills" : "bill"} in My Bills.</p>`,
+              title: n > 1 ? `${n} bills generated` : "Bill generated",
+              body: `<div class="summary">${nums.map((g) => `<div><span>${esc(g.boundary)}<br><small>${plural(g.regs.length, "register")} · ${periodsText(g)}</small></span><strong>${g.no}</strong></div>`).join("")}</div>
+                <p class="note">Billed registers are removed from the inbox. You can find the ${n > 1 ? "bills" : "bill"} in My Bills.</p>`,
               actions: [{ label: "Go to My Bills", run: () => toast("My Bills opens here in the full product") }, { label: "Done", kind: "primary" }],
             });
           }, 1300),
