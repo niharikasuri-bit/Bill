@@ -35,7 +35,7 @@
     return d;
   }
 
-  // Period 1 mirrors the live screen: 2 approved, 0 pending.
+  // Period 1 starts with the two registers from the live screen.
   addRegister("p1", "Walama Tawa", 12, "approved", "proxy sup");
   addRegister("p1", "Thlida T Gulami", 6, "approved", "proxy sup");
   addRegister("p2", "Walama Tawa", 12, "approved", "proxy sup");
@@ -53,7 +53,7 @@
 
   // Extra dummy registers so every period has enough rows to page through.
   const MORE = ["Gora", "Shani Town", "Lakumna", "Bargu", "Gwalasho", "Kombo", "Gasi", "Ngwalla", "Buma", "Zah", "Kwaya", "Dagu"];
-  const EXTRA = { p1: [8, 0], p2: [6, 4], p3: [5, 5], p4: [3, 7] }; // [approved, pending]
+  const EXTRA = { p1: [8, 6], p2: [6, 4], p3: [5, 5], p4: [3, 7] }; // [approved, pending]
   PERIODS.forEach((p, pi) => {
     const [a, pend] = EXTRA[p.id];
     for (let i = 0; i < a + pend; i++) {
