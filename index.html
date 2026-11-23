@@ -6,7 +6,7 @@
   <title>Bill Inbox</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Roboto+Condensed:wght@500;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=8" />
+  <link rel="stylesheet" href="styles.css?v=9" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 </head>
@@ -75,13 +75,7 @@
 
           <div class="bill-rule" id="billRule" role="note">
             <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M11 7h2v2h-2zm0 4h2v6h-2zm1-9a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm0 18a8 8 0 1 1 0-16 8 8 0 0 1 0 16z"/></svg>
-            <div class="rule-body">
-              <p>One bill is generated for each boundary.</p>
-              <ul>
-                <li>Same boundary, different billing periods: 1 bill</li>
-                <li>Different boundaries, same billing period: separate bills</li>
-              </ul>
-            </div>
+            <p class="rule-body">Bills are generated based on the boundary code, i.e. one bill for each boundary. A bill can include multiple billing periods.</p>
           </div>
           <div class="tabs" role="tablist">
             <button type="button" role="tab" class="tab" id="tab-approved" aria-controls="panel" data-tab="approved"></button>

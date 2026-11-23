@@ -254,5 +254,4 @@ tbody td .link { white-space: nowrap; }
 .bill-rule { display: flex; gap: 10px; align-items: flex-start; margin: 0 0 16px; padding: 10px 12px; background: #eef5f8; border-left: 4px solid var(--navy); border-radius: 2px; font-size: 13px; line-height: 1.45; }
 .bill-rule .i { color: var(--navy); margin-top: 1px; }
 .bill-rule strong { color: var(--text); }
-.rule-body p { margin: 0 0 2px; }
-.rule-body ul { margin: 0; padding-left: 18px; }
+.rule-body { margin: 0; }
