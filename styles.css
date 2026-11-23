@@ -234,3 +234,17 @@ tbody tr.flash { animation: flash 1.6s ease-out; }
   .topbar-right .top-select { display: none; }
 }
 tbody td .link { white-space: nowrap; }
+
+/* Fit to viewport (no footer): cards fill the screen, the table scrolls inside its card. */
+@media (min-width: 901px) and (min-height: 640px) {
+  .layout { height: calc(100vh - 56px); min-height: 0; }
+  .page { display: flex; flex-direction: column; overflow: hidden; padding-bottom: 16px; }
+  .grid { flex: 1; min-height: 0; }
+  .left { min-height: 0; }
+  .filters { min-height: 0; }
+  .main { display: flex; flex-direction: column; min-height: 0; }
+  .table-card { flex: 1; display: flex; flex-direction: column; min-height: 0; }
+  .table-scroll { flex: 1; min-height: 0; overflow: auto; }
+  thead th { position: sticky; top: 0; z-index: 2; }
+  .pager { border-top: 1px solid var(--border); }
+}
