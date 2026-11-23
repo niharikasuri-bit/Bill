@@ -250,9 +250,14 @@ tbody td .link { white-space: nowrap; }
   .pager { border-top: 1px solid var(--border); }
 }
 
-/* Bill rule note (Approved tab) */
-.bill-rule { display: flex; gap: 10px; align-items: flex-start; margin: 0 0 16px; padding: 10px 12px; background: #eef5f8; border-left: 4px solid var(--navy); border-radius: 2px; font-size: 13px; line-height: 1.45; }
-.bill-rule .i { color: var(--navy); margin-top: 1px; }
-.bill-rule strong { color: var(--text); }
-.rule-body p { margin: 0 0 2px; }
-.rule-body ul { margin: 0; padding-left: 18px; }
+/* About this step box (same style as the attendance register PurposeBox) */
+.purpose { border: 1px solid #e1e3e6; background: #fff; border-radius: 12px; overflow: hidden; margin: 0 0 16px; transition: background-color .3s, border-color .3s; }
+.purpose-title { margin: 0; padding: 10px 20px; border-bottom: 1px solid #e1e3e6; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); transition: color .3s, border-color .3s; }
+.purpose-body { padding: 0 20px; }
+.purpose-body p { margin: 0; padding: 10px 0; font-size: 14px; line-height: 1.55; color: var(--muted); }
+.purpose-body p + p { border-top: 1px solid #e1e3e6; }
+.purpose.decided { background: #eaf1fb; border-color: #b9cde8; }
+.purpose.decided .purpose-title { color: #1f4f8f; border-color: #cfdcef; }
+.purpose.decided .purpose-body p { color: var(--navy); }
+.purpose.decided .purpose-body p + p { border-color: #cfdcef; }
+.purpose.decided .purpose-outcome { font-size: 15px; font-weight: 700; }

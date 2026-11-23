@@ -6,7 +6,7 @@
   <title>Bill Inbox</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Roboto+Condensed:wght@500;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=10" />
+  <link rel="stylesheet" href="styles.css?v=11" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 </head>
@@ -73,16 +73,15 @@
             <p class="muted">LGA Level</p>
           </div>
 
-          <div class="bill-rule" id="billRule" role="note">
-            <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M11 7h2v2h-2zm0 4h2v6h-2zm1-9a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm0 18a8 8 0 1 1 0-16 8 8 0 0 1 0 16z"/></svg>
-            <div class="rule-body">
+          <aside class="purpose" id="billRule" aria-label="About this step" aria-live="polite">
+            <p class="purpose-title">About this step</p>
+            <div class="purpose-body">
               <p>Bills are generated based on the boundary code.</p>
-              <ul>
-                <li>One boundary gets one bill. That bill can include multiple billing periods.</li>
-                <li>Different boundaries get separate bills, even in the same billing period.</li>
-              </ul>
+              <p>One boundary gets one bill. That bill can include multiple billing periods.</p>
+              <p>Different boundaries get separate bills, even in the same billing period.</p>
+              <p class="purpose-outcome" id="billOutcome" hidden></p>
             </div>
-          </div>
+          </aside>
           <div class="tabs" role="tablist">
             <button type="button" role="tab" class="tab" id="tab-approved" aria-controls="panel" data-tab="approved"></button>
             <button type="button" role="tab" class="tab" id="tab-pending" aria-controls="panel" data-tab="pending"></button>
@@ -155,6 +154,6 @@
   <div class="loader" id="loader" hidden><div class="dots"><span></span><span></span><span></span></div><p id="loaderText"></p></div>
   <div class="toasts" id="toasts" aria-live="polite"></div>
 
-  <script src="app.js?v=11"></script>
+  <script src="app.js?v=12"></script>
 </body>
 </html>

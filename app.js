@@ -330,9 +330,20 @@
     const n = sel.size;
     const word = state.tab === "approved" ? "approved register" : "pending register";
     $("#bulkInfo").innerHTML = n
-      ? `<strong>${plural(n, "register")} selected</strong>${state.tab === "approved" ? `<span>${plural(new Set(tabRows("approved").filter((r) => sel.has(r.id)).map((r) => r.boundary)).size, "bill")} will be generated</span>` : ""}<button type="button" id="clearSel">Clear selection</button>`
+      ? `<strong>${plural(n, "register")} selected</strong><button type="button" id="clearSel">Clear selection</button>`
       : `<span>${plural(rows.length, word)}${rows.length ? ` · select registers to ${state.tab === "pending" ? "approve, " : "generate a bill, "}download or delete` : ""}</span>`;
+    // About this step: white until approved registers are ticked, then blue with the outcome.
     $("#billRule").hidden = state.tab !== "approved";
+    const picked = approved.filter((r) => state.selected.approved.has(r.id));
+    const bnds = [...new Set(picked.map((r) => r.boundary))];
+    $("#billRule").classList.toggle("decided", picked.length > 0);
+    $("#billOutcome").hidden = picked.length === 0;
+    $("#billOutcome").textContent = picked.length
+      ? `${plural(bnds.length, "bill")} will be generated: ${bnds.map((b) => {
+          const ps = [...new Set(picked.filter((r) => r.boundary === b).map((r) => periodById(r.periodId).n))].sort((x, y) => x - y);
+          return `${b} (${ps.length > 1 ? "Periods" : "Period"} ${ps.join(", ")})`;
+        }).join(", ")}.`
+      : "";
     $("#approveBtn").hidden = state.tab !== "pending";
     $("#approveBtn").disabled = n === 0;
     $("#approveBtn").lastChild.textContent = n > 1 ? `Approve (${n})` : "Approve";
