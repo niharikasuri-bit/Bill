@@ -53,7 +53,7 @@
 
   // Extra dummy registers so every period has enough rows to page through.
   const MORE = ["Gora", "Shani Town", "Lakumna", "Bargu", "Gwalasho", "Kombo", "Gasi", "Ngwalla", "Buma", "Zah", "Kwaya", "Dagu"];
-  const EXTRA = { p1: [8, 6], p2: [6, 4], p3: [5, 5], p4: [3, 7] }; // [approved, pending]
+  const EXTRA = { p1: [8, 12], p2: [6, 10], p3: [5, 9], p4: [3, 10] }; // [approved, pending]
   PERIODS.forEach((p, pi) => {
     const [a, pend] = EXTRA[p.id];
     for (let i = 0; i < a + pend; i++) {
