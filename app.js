@@ -331,7 +331,9 @@
     // Footer
     // Generate Bill works on the approved registers the user has ticked.
     const toBill = approved.filter((r) => state.selected.approved.has(r.id));
+    $("#generateBtn").hidden = state.tab !== "approved";
     $("#generateBtn").disabled = toBill.length === 0;
+    $("#generateBtn").lastChild.textContent = toBill.length > 1 ? `Generate Bill (${toBill.length})` : "Generate Bill";
 
     renderPeriodSelect();
   }

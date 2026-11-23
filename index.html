@@ -6,7 +6,7 @@
   <title>Bill Inbox</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Roboto+Condensed:wght@500;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=2" />
+  <link rel="stylesheet" href="styles.css?v=3" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 </head>
@@ -82,6 +82,7 @@
             <div class="bulkbar">
               <div class="bulk-info" id="bulkInfo" aria-live="polite"></div>
               <div class="bulk-actions">
+                <button type="button" class="btn primary" id="generateBtn"><svg class="i" viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm-2 15-5-5 1.4-1.4 3.6 3.6 7.6-7.6L19 8l-9 9z"/></svg>Generate Bill</button>
                 <button type="button" class="btn primary" id="approveBtn" hidden><svg class="i" viewBox="0 0 24 24"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg>Approve</button>
                 <div class="menu-wrap">
                   <button type="button" class="btn outline" id="downloadBtn" aria-haspopup="menu" aria-expanded="false"><svg class="i" viewBox="0 0 24 24"><path d="M5 20h14v-2H5v2zM19 9h-4V3H9v6H5l7 7 7-7z"/></svg>Download<svg class="i caret" viewBox="0 0 24 24" hidden><path d="M7 10l5 5 5-5z"/></svg></button>
@@ -119,9 +120,6 @@
     </main>
   </div>
 
-  <footer class="actionbar">
-    <button type="button" class="btn primary lg" id="generateBtn"><svg class="i" viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm-2 15-5-5 1.4-1.4 3.6 3.6 7.6-7.6L19 8l-9 9z"/></svg>Generate Bill</button>
-  </footer>
 
   <!-- Dialog -->
   <div class="overlay" id="dialogOverlay" hidden>
@@ -147,6 +145,6 @@
   <div class="loader" id="loader" hidden><div class="dots"><span></span><span></span><span></span></div><p id="loaderText"></p></div>
   <div class="toasts" id="toasts" aria-live="polite"></div>
 
-  <script src="app.js?v=4"></script>
+  <script src="app.js?v=5"></script>
 </body>
 </html>
