@@ -6,7 +6,7 @@
   <title>Bill Inbox</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Roboto+Condensed:wght@500;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=5" />
+  <link rel="stylesheet" href="styles.css?v=6" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 </head>
@@ -73,16 +73,16 @@
             <p class="muted">LGA Level</p>
           </div>
 
+          <div class="bill-rule" id="billRule" role="note">
+            <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M11 7h2v2h-2zm0 4h2v6h-2zm1-9a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm0 18a8 8 0 1 1 0-16 8 8 0 0 1 0 16z"/></svg>
+            <div><strong>One bill is generated for each boundary.</strong> Registers for the same boundary from different billing periods go into one bill. Registers for different boundaries get separate bills, even in the same billing period.</div>
+          </div>
           <div class="tabs" role="tablist">
             <button type="button" role="tab" class="tab" id="tab-approved" aria-controls="panel" data-tab="approved"></button>
             <button type="button" role="tab" class="tab" id="tab-pending" aria-controls="panel" data-tab="pending"></button>
           </div>
 
           <div class="table-card" id="panel" role="tabpanel">
-            <div class="bill-rule" id="billRule" role="note">
-              <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M11 7h2v2h-2zm0 4h2v6h-2zm1-9a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm0 18a8 8 0 1 1 0-16 8 8 0 0 1 0 16z"/></svg>
-              <div><strong>One bill is generated for each boundary.</strong> Registers for the same boundary from different billing periods go into one bill. Registers for different boundaries get separate bills, even in the same billing period.</div>
-            </div>
             <div class="bulkbar">
               <div class="bulk-info" id="bulkInfo" aria-live="polite"></div>
               <div class="bulk-actions">
@@ -149,6 +149,6 @@
   <div class="loader" id="loader" hidden><div class="dots"><span></span><span></span><span></span></div><p id="loaderText"></p></div>
   <div class="toasts" id="toasts" aria-live="polite"></div>
 
-  <script src="app.js?v=9"></script>
+  <script src="app.js?v=10"></script>
 </body>
 </html>
