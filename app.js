@@ -51,6 +51,18 @@
   addRegister("p4", "Thlida T Gulami", 7, "pending");
   addRegister("p4", "Kubo", 9, "pending");
 
+  // Extra dummy registers so every period has enough rows to page through.
+  const MORE = ["Gora", "Shani Town", "Lakumna", "Bargu", "Gwalasho", "Kombo", "Gasi", "Ngwalla", "Buma", "Zah", "Kwaya", "Dagu"];
+  const EXTRA = { p1: [8, 0], p2: [6, 4], p3: [5, 5], p4: [3, 7] }; // [approved, pending]
+  PERIODS.forEach((p, pi) => {
+    const [a, pend] = EXTRA[p.id];
+    for (let i = 0; i < a + pend; i++) {
+      const boundary = MORE[(i + pi * 3) % MORE.length];
+      const attendees = 5 + ((i * 7 + pi * 5) % 12);
+      addRegister(p.id, boundary, attendees, i < a ? "approved" : "pending", "proxy sup");
+    }
+  });
+
   // Deterministic attendee list per register.
   function attendeesOf(reg) {
     const seed = parseInt(reg.id.slice(-3), 10);
