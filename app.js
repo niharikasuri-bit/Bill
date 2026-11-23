@@ -332,6 +332,7 @@
     $("#bulkInfo").innerHTML = n
       ? `<strong>${plural(n, "register")} selected</strong>${state.tab === "approved" ? `<span>${plural(new Set(tabRows("approved").filter((r) => sel.has(r.id)).map((r) => r.boundary)).size, "bill")} will be generated</span>` : ""}<button type="button" id="clearSel">Clear selection</button>`
       : `<span>${plural(rows.length, word)}${rows.length ? ` · select registers to ${state.tab === "pending" ? "approve, " : "generate a bill, "}download or delete` : ""}</span>`;
+    $("#billRule").hidden = state.tab !== "approved";
     $("#approveBtn").hidden = state.tab !== "pending";
     $("#approveBtn").disabled = n === 0;
     $("#approveBtn").lastChild.textContent = n > 1 ? `Approve (${n})` : "Approve";
